@@ -2,9 +2,13 @@
 
 use std::{fs::read_to_string, path::Path};
 
-use crate::day01::{result_day01_stage1, result_day01_stage2};
+use crate::{
+    day01::{result_day01_stage1, result_day01_stage2},
+    day02::{parse_day02, result_day02_stage1, result_day02_stage2},
+};
 
 pub mod day01;
+pub mod day02;
 
 fn get_lines(path: &Path) -> Vec<String> {
     read_to_string(path)
@@ -22,6 +26,14 @@ fn day01() {
     println!("Day 1 stage 2: {result2}");
 }
 
+fn day02() {
+    let presents = parse_day02(&get_lines(Path::new("input/day02_input.txt")));
+    let result1 = result_day02_stage1(&presents);
+    println!("Day 2 stage 1: {result1}");
+    let result2 = result_day02_stage2(&presents);
+    println!("Day 1 stage 2: {result2}");
+}
+
 fn main() {
-    day01();
+    day02();
 }
