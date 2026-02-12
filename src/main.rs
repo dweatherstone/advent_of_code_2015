@@ -6,11 +6,13 @@ use crate::{
     day01::{result_day01_stage1, result_day01_stage2},
     day02::{parse_day02, result_day02_stage1, result_day02_stage2},
     day03::{result_day03_stage1, result_day03_stage2},
+    day04::{result_day04_stage1, result_day04_stage2},
 };
 
 pub mod day01;
 pub mod day02;
 pub mod day03;
+pub mod day04;
 
 fn get_lines(path: &Path) -> Vec<String> {
     read_to_string(path)
@@ -43,6 +45,13 @@ fn day03() {
     println!("Day 3 stage 2: {result2}");
 }
 
+fn day04() {
+    let result1 = result_day04_stage1("iwrupvqb");
+    println!("Day 4 stage 1: {result1}");
+    let result2 = result_day04_stage2("iwrupvqb");
+    println!("Day 4 stage 2: {result2}");
+}
+
 fn main() {
-    day03();
+    day04();
 }
