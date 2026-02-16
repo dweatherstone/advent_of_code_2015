@@ -4,7 +4,7 @@ pub fn result_day05_stage1(lines: &[String]) -> usize {
     lines
         .iter()
         .filter(|line| {
-            has_enough_vowels(&line) && has_double_letter(&line) && !contains_naughty_string(&line)
+            has_enough_vowels(line) && has_double_letter(line) && !contains_naughty_string(line)
         })
         .count()
 }
