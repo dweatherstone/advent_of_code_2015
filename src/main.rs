@@ -10,6 +10,7 @@ use crate::{
     day05::{result_day05_stage1, result_day05_stage2},
     day06::{result_day06_stage1, result_day06_stage2},
     day07::{parse_day07, result_day07_stage1, result_day07_stage2},
+    day08::{result_day08_stage1, result_day08_stage2},
 };
 
 pub mod day01;
@@ -19,6 +20,7 @@ pub mod day04;
 pub mod day05;
 pub mod day06;
 pub mod day07;
+pub mod day08;
 
 fn get_lines(path: &Path) -> Vec<String> {
     read_to_string(path)
@@ -80,6 +82,13 @@ fn day07() {
     println!("Day 7 stage 2: {result2}");
 }
 
+fn day08() {
+    let result1 = result_day08_stage1(&get_lines(Path::new("input/day08_input.txt")));
+    println!("Day 8 stage 1: {result1}");
+    let result2 = result_day08_stage2(&get_lines(Path::new("input/day08_input.txt")));
+    println!("Day 8 stage 2: {result2}");
+}
+
 fn main() {
-    day07();
+    day08();
 }
