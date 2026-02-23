@@ -15,6 +15,7 @@ use crate::{
     day08::{result_day08_stage1, result_day08_stage2},
     day09::{parse_day09, result_day09_stage1, result_day09_stage2},
     day10::result_day10,
+    day11::result_day11,
 };
 
 pub mod day01;
@@ -27,6 +28,7 @@ pub mod day07;
 pub mod day08;
 pub mod day09;
 pub mod day10;
+pub mod day11;
 
 fn get_lines(path: &Path) -> Vec<String> {
     read_to_string(path)
@@ -37,10 +39,10 @@ fn get_lines(path: &Path) -> Vec<String> {
 }
 
 fn main() {
-    for day in Days::iter() {
-        day.run(true);
-    }
-    //Days::Day04.run(true);
+    // for day in Days::iter() {
+    //     day.run(true);
+    // }
+    Days::Day11.run(true);
 }
 
 #[derive(EnumIter)]
@@ -55,6 +57,7 @@ enum Days {
     Day08,
     Day09,
     Day10,
+    Day11,
 }
 
 impl Days {
@@ -82,7 +85,15 @@ impl Days {
                 println!("{self} stage 1: {result1}");
                 let result2 = result_day10(input, 50);
                 println!("{self} stage 2: {result2}");
-            } // Produce a struct from input, then process
+            }
+            Day11 => {
+                let input = "cqjxjnds";
+                let result1 = result_day11(input);
+                println!("{self} stage 1: {result1}");
+                let result2 = result_day11(&result1);
+                println!("{self} stage 2: {result2}");
+            }
+            // Produce a struct from input, then process
             Day02 => {
                 let presents = parse_day02(&get_lines(Path::new("input/day02_input.txt")));
                 let result1 = result_day02_stage1(&presents);
@@ -172,6 +183,7 @@ impl Display for Days {
             Day08 => write!(f, "Day 8"),
             Day09 => write!(f, "Day 9"),
             Day10 => write!(f, "Day 10"),
+            Day11 => write!(f, "Day 11"),
         }
     }
 }
