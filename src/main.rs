@@ -1,6 +1,8 @@
-#![allow(dead_code)]
+// #![allow(dead_code)]
 
-use std::{fs::read_to_string, path::Path};
+use std::{fmt::Display, fs::read_to_string, path::Path, time::Instant};
+
+use strum::{EnumIter, IntoEnumIterator};
 
 use crate::{
     day01::{result_day01_stage1, result_day01_stage2},
@@ -34,81 +36,142 @@ fn get_lines(path: &Path) -> Vec<String> {
         .collect()
 }
 
-fn day01() {
-    let lines = get_lines(Path::new("input/day01_input.txt"));
-    let result1 = result_day01_stage1(&lines);
-    println!("Day 1 stage 1: {result1}");
-    let result2 = result_day01_stage2(&lines);
-    println!("Day 1 stage 2: {result2}");
-}
-
-fn day02() {
-    let presents = parse_day02(&get_lines(Path::new("input/day02_input.txt")));
-    let result1 = result_day02_stage1(&presents);
-    println!("Day 2 stage 1: {result1}");
-    let result2 = result_day02_stage2(&presents);
-    println!("Day 2 stage 2: {result2}");
-}
-
-fn day03() {
-    let result1 = result_day03_stage1(&get_lines(Path::new("input/day03_input.txt")));
-    println!("Day 3 stage 1: {result1}");
-    let result2 = result_day03_stage2(&get_lines(Path::new("input/day03_input.txt")));
-    println!("Day 3 stage 2: {result2}");
-}
-
-fn day04() {
-    let result1 = result_day04_stage1("iwrupvqb");
-    println!("Day 4 stage 1: {result1}");
-    let result2 = result_day04_stage2("iwrupvqb");
-    println!("Day 4 stage 2: {result2}");
-}
-
-fn day05() {
-    let result1 = result_day05_stage1(&get_lines(Path::new("input/day05_input.txt")));
-    println!("Day 5 stage 1: {result1}");
-    let result2 = result_day05_stage2(&get_lines(Path::new("input/day05_input.txt")));
-    println!("Day 5 stage 2: {result2}");
-}
-
-fn day06() {
-    let result1 = result_day06_stage1(&get_lines(Path::new("input/day06_input.txt")));
-    println!("Day 6 stage 1: {result1}");
-    let result2 = result_day06_stage2(&get_lines(Path::new("input/day06_input.txt")));
-    println!("Day 6 stage 2: {result2}");
-}
-
-fn day07() {
-    let instructions = parse_day07(&get_lines(Path::new("input/day07_input.txt")));
-    let result1 = result_day07_stage1(&instructions, "a");
-    println!("Day 7 stage 1: {result1}");
-    let result2 = result_day07_stage2(&instructions, "a", result1);
-    println!("Day 7 stage 2: {result2}");
-}
-
-fn day08() {
-    let result1 = result_day08_stage1(&get_lines(Path::new("input/day08_input.txt")));
-    println!("Day 8 stage 1: {result1}");
-    let result2 = result_day08_stage2(&get_lines(Path::new("input/day08_input.txt")));
-    println!("Day 8 stage 2: {result2}");
-}
-
-fn day09() {
-    let graph = parse_day09(&get_lines(Path::new("input/day09_input.txt")));
-    let result1 = result_day09_stage1(&graph);
-    println!("Day 9 stage 1: {result1}");
-    let result2 = result_day09_stage2(&graph);
-    println!("Day 9 stage 2: {result2}");
-}
-
-fn day10() {
-    let input = String::from("1321131112");
-    let result1 = result_day10(&input, 40);
-    println!("Day 10 stage 1: {result1}");
-    let result2 = result_day10(&input, 50);
-    println!("Day 10 stage 2: {result2}");
-}
-
 fn main() {
-    day10();
+    for day in Days::iter() {
+        day.run(true);
+    }
+    //Days::Day04.run(true);
+}
+
+#[derive(EnumIter)]
+enum Days {
+    Day01,
+    Day02,
+    Day03,
+    Day04,
+    Day05,
+    Day06,
+    Day07,
+    Day08,
+    Day09,
+    Day10,
+}
+
+impl Days {
+    fn get_results(&self) {
+        use Days::*;
+        match self {
+            // Process from an input file
+            Day01 | Day03 | Day05 | Day06 | Day08 => {
+                let lines = get_lines(Path::new(&self.get_path_str()));
+                let result1 = self.get_result1_from_lines(&lines);
+                println!("{self} stage 1: {result1}");
+                let result2 = self.get_result2_from_lines(&lines);
+                println!("{self} stage 2: {result2}");
+            } // Process from a single input
+            Day04 => {
+                let input = "iwrupvqb";
+                let result1 = result_day04_stage1(input);
+                println!("{self} stage 1: {result1}");
+                let result2 = result_day04_stage2(input);
+                println!("{self} stage 2: {result2}");
+            }
+            Day10 => {
+                let input = "1321131112";
+                let result1 = result_day10(input, 40);
+                println!("{self} stage 1: {result1}");
+                let result2 = result_day10(input, 50);
+                println!("{self} stage 2: {result2}");
+            } // Produce a struct from input, then process
+            Day02 => {
+                let presents = parse_day02(&get_lines(Path::new("input/day02_input.txt")));
+                let result1 = result_day02_stage1(&presents);
+                println!("Day 2 stage 1: {result1}");
+                let result2 = result_day02_stage2(&presents);
+                println!("Day 2 stage 2: {result2}");
+            }
+            Day07 => {
+                let instructions = parse_day07(&get_lines(Path::new("input/day07_input.txt")));
+                let result1 = result_day07_stage1(&instructions, "a");
+                println!("Day 7 stage 1: {result1}");
+                let result2 = result_day07_stage2(&instructions, "a", result1);
+                println!("Day 7 stage 2: {result2}");
+            }
+            Day09 => {
+                let graph = parse_day09(&get_lines(Path::new("input/day09_input.txt")));
+                let result1 = result_day09_stage1(&graph);
+                println!("Day 9 stage 1: {result1}");
+                let result2 = result_day09_stage2(&graph);
+                println!("Day 9 stage 2: {result2}");
+            }
+        }
+    }
+
+    fn get_path_str(&self) -> String {
+        use Days::*;
+        let filename = match self {
+            Day01 => "day01_input.txt",
+            Day03 => "day03_input.txt",
+            Day05 => "day05_input.txt",
+            Day06 => "day06_input.txt",
+            Day08 => "day08_input.txt",
+            _ => panic!("undefined path string"),
+        };
+        format!("input/{filename}")
+    }
+
+    fn get_result1_from_lines(&self, lines: &[String]) -> Box<dyn Display> {
+        use Days::*;
+        match self {
+            Day01 => Box::new(result_day01_stage1(lines)),
+            Day03 => Box::new(result_day03_stage1(lines)),
+            Day05 => Box::new(result_day05_stage1(lines)),
+            Day06 => Box::new(result_day06_stage1(lines)),
+            Day08 => Box::new(result_day08_stage1(lines)),
+            _ => panic!("undefined result1 function"),
+        }
+    }
+
+    fn get_result2_from_lines(&self, lines: &[String]) -> Box<dyn Display> {
+        use Days::*;
+        match self {
+            Day01 => Box::new(result_day01_stage2(lines)),
+            Day03 => Box::new(result_day03_stage2(lines)),
+            Day05 => Box::new(result_day05_stage2(lines)),
+            Day06 => Box::new(result_day06_stage2(lines)),
+            Day08 => Box::new(result_day08_stage2(lines)),
+            _ => panic!("undefined result2 function"),
+        }
+    }
+
+    fn run(&self, with_timing: bool) {
+        let start = if with_timing {
+            Some(Instant::now())
+        } else {
+            None
+        };
+        self.get_results();
+        if with_timing {
+            let duration = start.unwrap().elapsed();
+            println!("{self} time taken: {:?}\n", duration);
+        }
+    }
+}
+
+impl Display for Days {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use Days::*;
+        match self {
+            Day01 => write!(f, "Day 1"),
+            Day02 => write!(f, "Day 2"),
+            Day03 => write!(f, "Day 3"),
+            Day04 => write!(f, "Day 4"),
+            Day05 => write!(f, "Day 5"),
+            Day06 => write!(f, "Day 6"),
+            Day07 => write!(f, "Day 7"),
+            Day08 => write!(f, "Day 8"),
+            Day09 => write!(f, "Day 9"),
+            Day10 => write!(f, "Day 10"),
+        }
+    }
 }
