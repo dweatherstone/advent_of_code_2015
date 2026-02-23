@@ -16,6 +16,7 @@ use crate::{
     day09::{parse_day09, result_day09_stage1, result_day09_stage2},
     day10::result_day10,
     day11::result_day11,
+    day12::{result_day12_stage1, result_day12_stage2},
 };
 
 pub mod day01;
@@ -29,6 +30,7 @@ pub mod day08;
 pub mod day09;
 pub mod day10;
 pub mod day11;
+pub mod day12;
 
 fn get_lines(path: &Path) -> Vec<String> {
     read_to_string(path)
@@ -39,10 +41,10 @@ fn get_lines(path: &Path) -> Vec<String> {
 }
 
 fn main() {
-    // for day in Days::iter() {
-    //     day.run(true);
-    // }
-    Days::Day11.run(true);
+    for day in Days::iter() {
+        day.run(true);
+    }
+    //Days::Day12.run(true);
 }
 
 #[derive(EnumIter)]
@@ -58,6 +60,7 @@ enum Days {
     Day09,
     Day10,
     Day11,
+    Day12,
 }
 
 impl Days {
@@ -65,7 +68,7 @@ impl Days {
         use Days::*;
         match self {
             // Process from an input file
-            Day01 | Day03 | Day05 | Day06 | Day08 => {
+            Day01 | Day03 | Day05 | Day06 | Day08 | Day12 => {
                 let lines = get_lines(Path::new(&self.get_path_str()));
                 let result1 = self.get_result1_from_lines(&lines);
                 println!("{self} stage 1: {result1}");
@@ -126,6 +129,7 @@ impl Days {
             Day05 => "day05_input.txt",
             Day06 => "day06_input.txt",
             Day08 => "day08_input.txt",
+            Day12 => "day12_input.txt",
             _ => panic!("undefined path string"),
         };
         format!("input/{filename}")
@@ -139,6 +143,7 @@ impl Days {
             Day05 => Box::new(result_day05_stage1(lines)),
             Day06 => Box::new(result_day06_stage1(lines)),
             Day08 => Box::new(result_day08_stage1(lines)),
+            Day12 => Box::new(result_day12_stage1(lines)),
             _ => panic!("undefined result1 function"),
         }
     }
@@ -151,6 +156,7 @@ impl Days {
             Day05 => Box::new(result_day05_stage2(lines)),
             Day06 => Box::new(result_day06_stage2(lines)),
             Day08 => Box::new(result_day08_stage2(lines)),
+            Day12 => Box::new(result_day12_stage2(lines)),
             _ => panic!("undefined result2 function"),
         }
     }
@@ -184,6 +190,7 @@ impl Display for Days {
             Day09 => write!(f, "Day 9"),
             Day10 => write!(f, "Day 10"),
             Day11 => write!(f, "Day 11"),
+            Day12 => write!(f, "Day 12"),
         }
     }
 }
