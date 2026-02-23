@@ -18,6 +18,7 @@ use crate::{
     day11::result_day11,
     day12::{result_day12_stage1, result_day12_stage2},
     day13::{result_day13_stage1, result_day13_stage2},
+    day14::{result_day14_stage1, result_day14_stage2},
 };
 
 pub mod day01;
@@ -33,6 +34,7 @@ pub mod day10;
 pub mod day11;
 pub mod day12;
 pub mod day13;
+pub mod day14;
 
 fn get_lines(path: &Path) -> Vec<String> {
     read_to_string(path)
@@ -46,7 +48,7 @@ fn main() {
     // for day in Days::iter() {
     //     day.run(true);
     // }
-    Days::Day13.run(true);
+    Days::Day14.run(true);
 }
 
 #[derive(EnumIter)]
@@ -64,6 +66,7 @@ enum Days {
     Day11,
     Day12,
     Day13,
+    Day14,
 }
 
 impl Days {
@@ -97,6 +100,15 @@ impl Days {
                 let result1 = result_day11(input);
                 println!("{self} stage 1: {result1}");
                 let result2 = result_day11(&result1);
+                println!("{self} stage 2: {result2}");
+            }
+            Day14 => {
+                let total_time = 2503;
+                let result1 =
+                    result_day14_stage1(&get_lines(Path::new("input/day14_input.txt")), total_time);
+                println!("{self} stage 1: {result1}");
+                let result2 =
+                    result_day14_stage2(&get_lines(Path::new("input/day14_input.txt")), total_time);
                 println!("{self} stage 2: {result2}");
             }
             // Produce a struct from input, then process
@@ -134,6 +146,7 @@ impl Days {
             Day08 => "day08_input.txt",
             Day12 => "day12_input.txt",
             Day13 => "day13_input.txt",
+            Day14 => "day14_input.txt",
             _ => panic!("undefined path string"),
         };
         format!("input/{filename}")
@@ -198,6 +211,7 @@ impl Display for Days {
             Day11 => write!(f, "Day 11"),
             Day12 => write!(f, "Day 12"),
             Day13 => write!(f, "Day 13"),
+            Day14 => write!(f, "Day 14"),
         }
     }
 }
