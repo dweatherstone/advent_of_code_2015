@@ -5,7 +5,11 @@ edition = "2024"
 
 [dependencies]
 itertools = "0.14.0"
-openssl = { version = "0.10.75", features = ["vendored"] }
+openssl = "0.10.75"
 rayon = "1.11.0"
 serde_json = "1.0.149"
 strum = { version = "0.27.2", features = ["derive"] }
+
+# Only use the "vendored" openssl feature when compiling on Linux
+[target.'cfg(unix)'.dependencies]
+openssl = { version = "0.10.75", features = ["vendored"]}

@@ -47,10 +47,10 @@ fn get_lines(path: &Path) -> Vec<String> {
 }
 
 fn main() {
-    // for day in Days::iter() {
-    //     day.run(true);
-    // }
-    Days::Day15.run(true);
+    for day in Days::iter() {
+        day.run(true);
+    }
+    //Days::Day15.run(true);
 }
 
 #[derive(EnumIter)]
