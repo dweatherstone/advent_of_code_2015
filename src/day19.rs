@@ -111,38 +111,6 @@ fn a_star_make_medicine(initial: String, transformations: &[(String, String)]) -
     0
 }
 
-/// This works backwards from the target molecule to the initial state to find the path.
-/// The number of possibilities soon explodes if attempted in the opposite direction.
-// fn make_medicine(
-//     current: String,
-//     target: &str,
-//     steps: usize,
-//     transformations: &[(String, String)],
-// ) -> Option<usize> {
-//     if &current == target {
-//         return Some(steps);
-//     }
-//     if current.len() < target.len() {
-//         return None;
-//     }
-//     for (start_str, end_str) in transformations {
-//         for (idx, _) in current.match_indices(end_str) {
-//             let next_medicine = format!(
-//                 "{}{}{}",
-//                 &current[..idx],
-//                 start_str,
-//                 &current[(idx + end_str.len())..]
-//             );
-//             if let Some(final_steps) =
-//                 make_medicine(next_medicine, target, steps + 1, transformations)
-//             {
-//                 return Some(final_steps);
-//             }
-//         }
-//     }
-//     None
-// }
-
 #[cfg(test)]
 mod day19 {
     use super::*;
