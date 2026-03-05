@@ -9,8 +9,7 @@ pub fn result_day22_stage1(lines: &[String]) -> u64 {
 }
 
 pub fn result_day22_stage2(lines: &[String]) -> u64 {
-    let mut fight = parse_day22(lines, true);
-    fight.hard_mode = true;
+    let fight = parse_day22(lines, true);
     let mut min_mana_spend = u64::MAX;
     run_step(fight, &mut min_mana_spend);
     min_mana_spend
@@ -252,7 +251,7 @@ mod day22 {
         assert_eq!(state.boss_hp, 14);
 
         // Boss turn
-        state.apply_effects(); // Recharge: Mana increased by 101   
+        state.apply_effects(); // Recharge: Mana increased by 101
         assert_eq!(state.player_mana, 122);
         assert_eq!(state.recharge_timer, 4);
         // Boss attacks - 8 damage
